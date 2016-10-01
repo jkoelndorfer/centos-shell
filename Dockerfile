@@ -1,31 +1,20 @@
-FROM centos:7
+FROM fedora:24
 
 MAINTAINER John Koelndorfer <jkoelndorfer@gmail.com>
 
-# Additional software repositories.
-RUN rpm --import 'http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7'      && \
-    rpm --import 'https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7'  && \
-    rpm --import 'https://dl.iuscommunity.org/pub/ius/IUS-COMMUNITY-GPG-KEY' && \
-    yum -y install centos-release-scl centos-release-scl-rh \
-                   epel-release       'https://centos7.iuscommunity.org/ius-release.rpm'
-
-# Enable yum installing documentation. We need this for man pages!
-#
-# I like man pages.
-RUN sed -i -e '/^tsflags=/d' /etc/yum.conf
-
 # Reinstall any already-installed software so that we get its documentation.
-RUN yum -y reinstall '*'
+RUN dnf -y reinstall '*'
 
 # Install the absolute basics.
-RUN yum -y install openssh openssh-clients openssh-server sudo supervisor
+RUN dnf -y install openssh openssh-clients openssh-server sudo supervisor
 
 # Install all the nice user applications.
 #
 # TODO: Make the list of packages a build arg once Ansible 2.2 releases
-RUN yum -y install git man-db man-pages python35u ruby tmux vim-enhanced weechat zsh && \
-    yum clean all && \
-    rm -rf /var/cache/yum/*
+RUN dnf -y install git man man-pages python ruby tmux vim-enhanced weechat zsh    \
+                   hostname                                                    && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf/*
 
 # Fix sshd settings.
 #
@@ -43,6 +32,9 @@ RUN mkdir /etc/ssh/host_keys
 COPY build/wheel-passwordless-sudo /etc/sudoers.d/wheel-passwordless-sudo
 COPY app/entrypoint.sh /app/entrypoint.sh
 COPY app/supervisord.ini /etc/supervisord.d/supervisord.ini
+
+# This needs to be removed before login via ssh will be allowed.
+RUN rm -f /var/run/nologin
 
 EXPOSE 2225
 
