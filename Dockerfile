@@ -28,9 +28,13 @@ RUN yum -y install git man-db man-pages python35u ruby tmux vim-enhanced weechat
     rm -rf /var/cache/yum/*
 
 # Fix sshd settings.
+#
+# FIXME: We're setting the port in our Dockerfile here to work around a bug where Docker
+# does not correctly publish ports when the exposed port and published port are different.
 RUN sed -i -e 's/^#PermitRootLogin yes/PermitRootLogin no/'               /etc/ssh/sshd_config && \
     sed -i -e 's/^#GSSAPIAuthentication yes/GSSAPIAuthentication no/'     /etc/ssh/sshd_config && \
     sed -i -e 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && \
+    sed -i -e 's/^#Port 22/Port 2225/'                                    /etc/ssh/sshd_config && \
     sed -i -e 's!^HostKey /etc/ssh!HostKey /etc/ssh/host_keys!'           /etc/ssh/sshd_config
 
 # sshd host keys are generated at boot time if they don't already exist.
@@ -40,7 +44,7 @@ COPY build/wheel-passwordless-sudo /etc/sudoers.d/wheel-passwordless-sudo
 COPY app/entrypoint.sh /app/entrypoint.sh
 COPY app/supervisord.ini /etc/supervisord.d/supervisord.ini
 
-EXPOSE 22
+EXPOSE 2225
 
 VOLUME ["/home", "/etc/ssh/host_keys"]
 
