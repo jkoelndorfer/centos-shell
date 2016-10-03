@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ln -sf "/usr/share/zoneinfo/${TIMEZONE:-UTC}" /etc/localtime
+
 # Create our user.
 useradd --no-user-group --create-home --uid "${USER_UID:-500}" \
         --groups wheel --shell "${USER_SHELL:-/bin/bash}" "$USER_NAME"
