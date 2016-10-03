@@ -23,7 +23,6 @@ RUN dnf -y install git man man-pages python ruby tmux vim-enhanced weechat zsh  
 RUN sed -i -e 's/^#PermitRootLogin yes/PermitRootLogin no/'               /etc/ssh/sshd_config && \
     sed -i -e 's/^#GSSAPIAuthentication yes/GSSAPIAuthentication no/'     /etc/ssh/sshd_config && \
     sed -i -e 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && \
-    sed -i -e 's/^#Port 22/Port 2225/'                                    /etc/ssh/sshd_config && \
     sed -i -e 's!^HostKey /etc/ssh!HostKey /etc/ssh/host_keys!'           /etc/ssh/sshd_config
 
 # sshd host keys are generated at boot time if they don't already exist.
@@ -36,7 +35,7 @@ COPY app/supervisord.ini /etc/supervisord.d/supervisord.ini
 # This needs to be removed before login via ssh will be allowed.
 RUN rm -f /var/run/nologin
 
-EXPOSE 2225
+EXPOSE 22
 
 VOLUME ["/home", "/etc/ssh/host_keys"]
 
