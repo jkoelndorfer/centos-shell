@@ -22,8 +22,6 @@ RUN dnf -y install \
         nmap \
         nmap-ncat \
         procps-ng \
-        python \
-        python3 \
         ruby \
         tmux \
         vim-enhanced \
