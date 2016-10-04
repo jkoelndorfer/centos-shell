@@ -36,9 +36,6 @@ RUN dnf -y install \
 RUN pip3 install hangups
 
 # Fix sshd settings.
-#
-# FIXME: We're setting the port in our Dockerfile here to work around a bug where Docker
-# does not correctly publish ports when the exposed port and published port are different.
 RUN sed -i -e 's/^#PermitRootLogin yes/PermitRootLogin no/'               /etc/ssh/sshd_config && \
     sed -i -e 's/^#GSSAPIAuthentication yes/GSSAPIAuthentication no/'     /etc/ssh/sshd_config && \
     sed -i -e 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && \
