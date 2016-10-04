@@ -11,10 +11,29 @@ RUN dnf -y install openssh openssh-clients openssh-server sudo supervisor
 # Install all the nice user applications.
 #
 # TODO: Make the list of packages a build arg once Ansible 2.2 releases
-RUN dnf -y install git man man-pages python ruby tmux vim-enhanced weechat zsh    \
-                   hostname                                                    && \
+RUN dnf -y install \
+        ansible \
+        bind-utils \
+        git \
+        hostname \
+        man \
+        man-pages \
+        net-tools \
+        nmap \
+        nmap-ncat \
+        procps-ng \
+        python \
+        python3 \
+        ruby \
+        tmux \
+        vim-enhanced \
+        weechat \
+        zsh \
+        && \
     dnf clean all && \
     rm -rf /var/cache/dnf/*
+
+RUN pip3 install hangups
 
 # Fix sshd settings.
 #
