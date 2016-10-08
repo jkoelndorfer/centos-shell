@@ -14,6 +14,7 @@ RUN dnf -y install openssh openssh-clients openssh-server sudo supervisor
 RUN dnf -y install \
         ansible \
         bind-utils \
+        fedora-packager \
         git \
         hostname \
         man \
