@@ -19,6 +19,7 @@ RUN dnf -y install \
         hostname \
         man \
         man-pages \
+        mosh \
         net-tools \
         nmap \
         nmap-ncat \
