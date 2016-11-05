@@ -3,7 +3,9 @@ FROM fedora:24
 MAINTAINER John Koelndorfer <jkoelndorfer@gmail.com>
 
 # Reinstall any already-installed software so that we get its documentation.
-RUN dnf -y reinstall '*'
+#
+# Update any base packages in our image.
+RUN dnf -y reinstall '*' && dnf -y update
 
 # Install the absolute basics.
 RUN dnf -y install openssh openssh-clients openssh-server sudo supervisor
