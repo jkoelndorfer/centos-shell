@@ -54,6 +54,7 @@ COPY app/supervisord.ini /etc/supervisord.d/supervisord.ini
 RUN rm -f /var/run/nologin
 
 EXPOSE 22
+EXPOSE 60000-61000/udp
 
 VOLUME ["/home", "/etc/ssh/host_keys"]
 
