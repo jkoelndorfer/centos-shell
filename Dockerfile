@@ -27,6 +27,8 @@ RUN dnf -y install \
         nmap-ncat \
         procps-ng \
         ruby \
+        texlive-lastpage \
+        texlive-scheme-basic \
         tmux \
         vim-enhanced \
         weechat \
