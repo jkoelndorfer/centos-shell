@@ -22,10 +22,13 @@ RUN dnf -y install \
         man \
         man-pages \
         mosh \
+        neovim \
         net-tools \
         nmap \
         nmap-ncat \
         procps-ng \
+        python2-neovim \
+        python3-neovim \
         ruby \
         texlive-lastpage \
         texlive-scheme-basic \
